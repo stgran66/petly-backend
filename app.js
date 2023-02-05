@@ -7,6 +7,8 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 
 const { authRouter } = require('./routes/api/');
+const { newsRouter } = require('./routes/api/');
+const { serviceRouter } = require('./routes/api/');
 
 const app = express();
 
@@ -22,6 +24,8 @@ app.use(express.json());
 // app.use('/api/', Router);
 // auth page
 app.use('/api/auth', authRouter);
+app.use('/api/news', newsRouter);
+app.use('/api/services', serviceRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: 'Not found' });
