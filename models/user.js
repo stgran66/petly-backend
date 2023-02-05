@@ -34,7 +34,19 @@ const userSchema = Schema(
       minlenght: 12,
       maxlength: 12,
     },
-    // token: { type: String },
+    // avatarURL: {
+    //   type: String,
+    //   required: true,
+    // },
+    // verify: {
+    //   type: Boolean,
+    //   default: false,
+    // },
+    // verificationToken: {
+    //   type: String,
+    //   required: [true, 'Verify token is required'],
+    // },
+    token: { type: String },
   },
   { versionKey: false, timestamps: true }
 );
