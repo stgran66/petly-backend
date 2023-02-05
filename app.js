@@ -6,9 +6,7 @@ const cors = require('cors');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 
-const { authRouter } = require('./routes/api/');
-const { newsRouter } = require('./routes/api/');
-const { serviceRouter } = require('./routes/api/');
+const { authRouter, newsRouter, serviceRouter } = require('./routes/api/');
 
 const app = express();
 
