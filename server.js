@@ -11,7 +11,7 @@ const connection = mongoose.connect(uriDB);
 
 connection
   .then(() => console.log('Database connection successful'))
-  .catch((err) => {
+  .catch(err => {
     console.log(`Cannot connect to database. Error message: ${err.message}`);
     process.exit(1);
   })
@@ -20,6 +20,6 @@ connection
       console.log(`Server running. Use our API on port: ${PORT}`);
     });
   })
-  .catch((err) =>
+  .catch(err =>
     console.log(`Server not running. Error message: ${err.message}`)
   );
