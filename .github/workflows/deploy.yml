@@ -18,4 +18,4 @@ jobs:
       - name: push 🚀
         uses: s0/git-publish-subdir-action@develop
         with:
-          branch: [production]
+          branches: [production]
