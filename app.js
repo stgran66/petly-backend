@@ -7,7 +7,12 @@ require('dotenv').config();
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 
-const { authRouter, newsRouter, serviceRouter } = require('./routes/api/');
+const {
+  authRouter,
+  newsRouter,
+  serviceRouter,
+  healthzRouter,
+} = require('./routes/api/');
 
 const app = express();
 
@@ -25,6 +30,8 @@ app.use(express.json());
 app.use('/api/auth', authRouter);
 app.use('/api/news', newsRouter);
 app.use('/api/services', serviceRouter);
+// Healtz check
+app.use('/api/healthz', healthzRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: 'Not found' });
