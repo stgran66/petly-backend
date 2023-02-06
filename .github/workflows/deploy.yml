@@ -1,24 +1,26 @@
-name: Build and deploy to Render
+# .github/workflows/publish.yml
+name: Generate a build and push to another branch
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
-  install-and-deploy:
+  build:
     runs-on: ubuntu-latest
+    name: Push
     steps:
-      - name: Checkout 🛎️
-        uses: actions/checkout@v2.3.1
+      - name: git-checkout
+        uses: actions/checkout@v2
 
-      - name: Install 🔧
-        run: |
-          npm install
+      - name: Install all dependencies
+        run: npm install
 
-      - name: push 🚀
+      - name: Push
         uses: s0/git-publish-subdir-action@develop
         env:
           REPO: self
-          BRANCH: production
-          FOLDER: /
-          GITHUB_TOKEN: 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
+          BRANCH: production # The branch name where you want to push the assets
+          FOLDER: / # The directory where your assets are generated
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub will automatically add this - you don't need to bother getting a token
