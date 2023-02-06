@@ -17,5 +17,6 @@ jobs:
 
       - name: push 🚀
         uses: s0/git-publish-subdir-action@develop
-        with:
-          branch: production
+        env:
+          REPO: self
+          BRANCH: production
