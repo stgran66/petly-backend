@@ -20,3 +20,4 @@ jobs:
         env:
           REPO: self
           BRANCH: production
+          FOLDER: /
