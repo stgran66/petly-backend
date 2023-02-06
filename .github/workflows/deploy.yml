@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 jobs:
-  build-and-deploy:
+  install-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
@@ -18,4 +18,4 @@ jobs:
       - name: push 🚀
         uses: s0/git-publish-subdir-action@develop
         with:
-          branch: ['production']
+          branch: [production]
