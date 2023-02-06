@@ -24,10 +24,10 @@ const userSchema = Schema(
     phone: {
       type: String,
     },
-    // avatarURL: {
-    //   type: String,
-    //   required: true,
-    // },
+    avatarURL: {
+      type: String,
+      required: true,
+    },
     // verify: {
     //   type: Boolean,
     //   default: false,
