@@ -21,4 +21,3 @@ jobs:
           REPO: self
           BRANCH: production
           FOLDER: /
-          GITHUB_TOKEN: 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
