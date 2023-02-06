@@ -14,7 +14,7 @@ jobs:
       - name: Install, lint 🔧
         run: |
           npm install
-          npm run lint:js
+          npm run lint
 
       - name: push 🚀
         uses: s0/git-publish-subdir-action@develop
