@@ -8,6 +8,7 @@ const authenticate = async (req, res, next) => {
 
   if (bearer !== 'Bearer') {
     res.status(401).json({ message: 'Not authorized' });
+    return;
   }
 
   try {
@@ -16,6 +17,7 @@ const authenticate = async (req, res, next) => {
 
     if (!user || !user.token || token !== String(user.token)) {
       res.status(401).json({ message: 'Not authorized' });
+      return;
     }
     req.user = user;
     next();
