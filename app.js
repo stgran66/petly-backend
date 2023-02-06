@@ -1,6 +1,7 @@
 const express = require('express');
 const logger = require('morgan');
 const cors = require('cors');
+require('dotenv').config();
 
 // add const for swagger
 const swaggerUi = require('swagger-ui-express');
@@ -11,6 +12,7 @@ const {
   newsRouter,
   serviceRouter,
   noticeRouter,
+  healthzRouter,
 } = require('./routes/api/');
 
 const app = express();
@@ -30,6 +32,8 @@ app.use('/api/auth', authRouter);
 app.use('/api/news', newsRouter);
 app.use('/api/services', serviceRouter);
 app.use('/api/notices', noticeRouter);
+// Healtz check
+app.use('/api/healthz', healthzRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: 'Not found' });
