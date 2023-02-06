@@ -32,7 +32,6 @@ const noticeSchema = new Schema({
     type: String,
     enum: ['sell', 'lostOrFound', 'in good hands'],
   },
-  isFavourite: { type: Boolean },
 });
 
 const Notice = model('notice', noticeSchema);
