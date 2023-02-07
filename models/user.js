@@ -24,10 +24,16 @@ const userSchema = Schema(
     phone: {
       type: String,
     },
-    avatarURL: {
-      type: String,
-      required: true,
+
+    favorite: {
+      type: Schema.Types.ObjectId,
     },
+
+    // avatarURL: {
+    //   type: String,
+    //   required: true,
+    // },
+
     // verify: {
     //   type: Boolean,
     //   default: false,
