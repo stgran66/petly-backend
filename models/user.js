@@ -34,6 +34,10 @@ const userSchema = Schema(
       minlenght: 12,
       maxlength: 12,
     },
+    favorite: {
+      type: Schema.Types.ObjectId,
+    },
+
     // avatarURL: {
     //   type: String,
     //   required: true,
