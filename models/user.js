@@ -7,7 +7,6 @@ const userSchema = Schema(
     email: {
       type: String,
       required: [true, 'Email is required'],
-
       unique: true,
     },
     password: {
@@ -24,19 +23,18 @@ const userSchema = Schema(
     phone: {
       type: String,
     },
+    favorite: {
+      type: Schema.Types.ObjectId,
+    },
     birthday: {
       type: String,
       default: '00.00.0000',
       required: [true, 'birthday is required'],
     },
-    favorite: {
-      type: Schema.Types.ObjectId,
-    },
     avatarURL: {
       type: String,
       required: true,
     },
-
     token: { type: String },
   },
   { versionKey: false, timestamps: true }
