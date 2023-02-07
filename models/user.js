@@ -2,25 +2,17 @@ const { Schema, model } = require('mongoose');
 const Joi = require('joi');
 const { handleMongooseError } = require('../helpers');
 
-/* eslint-disable */
-// const emailRegexp = /^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i;
-// const passwordRegexp = /^ (? !$)([a - z][0 - 9][A - Z])$/;
-/* eslint-enable */
-
 const userSchema = Schema(
   {
     email: {
       type: String,
       required: [true, 'Email is required'],
-      // match: emailRegexp,
+
       unique: true,
     },
     password: {
       type: String,
       required: [true, 'Set password for user'],
-      //   match: passwordRegexp,
-      minlenght: 7,
-      // maxlength: 32,
     },
     name: {
       type: String,
@@ -31,13 +23,11 @@ const userSchema = Schema(
     },
     phone: {
       type: String,
-      minlenght: 12,
-      maxlength: 12,
     },
-    // avatarURL: {
-    //   type: String,
-    //   required: true,
-    // },
+    avatarURL: {
+      type: String,
+      required: true,
+    },
     // verify: {
     //   type: Boolean,
     //   default: false,
@@ -54,16 +44,31 @@ const userSchema = Schema(
 userSchema.post('save', handleMongooseError);
 
 const signupSchema = Joi.object({
-  email: Joi.string().required(),
-  password: Joi.string().min(6).required(),
+  email: Joi.string()
+    .min(10)
+    .max(63)
+    .pattern(/^(?!-)[a-zA-Z0-9_.-]+@[a-zA-Z0-9.-]+$/)
+
+    .email({ minDomainSegments: 2 })
+    .messages({
+      'string.pattern.base': `email can contain only latin letters, numbers and symbols . -  _ (dot, hyphen, underscore) and can't start from hyphen`,
+    })
+    .required(),
+  password: Joi.string().min(7).max(32).required(),
   name: Joi.string().required(),
   city: Joi.string(),
-  phone: Joi.string(),
+  phone: Joi.string()
+    .min(13)
+    .max(13)
+    .pattern(/^\+380\d{3}\d{2}\d{2}\d{2}$/)
+    .messages({
+      'string.pattern.base': `Phone number can contain only 13 symbols: starts from symbol '+' and 12 digits after.`,
+    }),
 });
 
 const loginSchema = Joi.object({
-  password: Joi.string().min(7).required(),
-  email: Joi.string().required(),
+  password: Joi.string().min(7).max(32).required(),
+  email: Joi.string().email({ minDomainSegments: 2 }).required(),
 });
 
 const schemas = {
