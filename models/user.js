@@ -24,24 +24,19 @@ const userSchema = Schema(
     phone: {
       type: String,
     },
-
+    birthday: {
+      type: String,
+      default: '00.00.0000',
+      required: [true, 'birthday is required'],
+    },
     favorite: {
       type: Schema.Types.ObjectId,
     },
+    avatarURL: {
+      type: String,
+      required: true,
+    },
 
-    // avatarURL: {
-    //   type: String,
-    //   required: true,
-    // },
-
-    // verify: {
-    //   type: Boolean,
-    //   default: false,
-    // },
-    // verificationToken: {
-    //   type: String,
-    //   required: [true, 'Verify token is required'],
-    // },
     token: { type: String },
   },
   { versionKey: false, timestamps: true }
@@ -54,7 +49,6 @@ const signupSchema = Joi.object({
     .min(10)
     .max(63)
     .pattern(/^(?!-)[a-zA-Z0-9_.-]+@[a-zA-Z0-9.-]+$/)
-
     .email({ minDomainSegments: 2 })
     .messages({
       'string.pattern.base': `email can contain only latin letters, numbers and symbols . -  _ (dot, hyphen, underscore) and can't start from hyphen`,
@@ -70,6 +64,7 @@ const signupSchema = Joi.object({
     .messages({
       'string.pattern.base': `Phone number can contain only 13 symbols: starts from symbol '+' and 12 digits after.`,
     }),
+  birthday: Joi.string().default('00.00.0000'),
 });
 
 const loginSchema = Joi.object({
