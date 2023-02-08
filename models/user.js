@@ -26,6 +26,7 @@ const userSchema = Schema(
     },
     favorite: {
       type: [Schema.Types.ObjectId],
+      ref: 'notice',
     },
 
     birthday: {

@@ -7,7 +7,7 @@ const { schemas } = require('../../models/user');
 
 router.get('/:category', noticeCtrl.listNotices);
 router.get('/:noticeId', noticeCtrl.getNoticeById);
-router.get('/favorite', userCtrl.listFavorite);
+router.get('/favorite/a', authenticate, userCtrl.listFavorite);
 router.post(
   '/:noticeId/favorite',
   schemas.idValidation,

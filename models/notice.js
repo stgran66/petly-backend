@@ -32,6 +32,9 @@ const noticeSchema = new Schema({
     type: String,
     enum: ['sell', 'lost-found', 'for-free'],
   },
+  owner: {
+    type: Schema.Types.ObjectId,
+  },
 });
 
 const Notice = model('notice', noticeSchema);
