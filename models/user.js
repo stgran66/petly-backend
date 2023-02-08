@@ -1,6 +1,7 @@
 const { Schema, model } = require('mongoose');
 const Joi = require('joi');
 const { handleMongooseError } = require('../helpers');
+const ObjectId = require('mongoose').Types.ObjectId;
 
 const userSchema = Schema(
   {
@@ -24,17 +25,20 @@ const userSchema = Schema(
       type: String,
     },
     favorite: {
-      type: Schema.Types.ObjectId,
+      type: [Schema.Types.ObjectId],
     },
+
     birthday: {
       type: String,
       default: '00.00.0000',
       required: [true, 'birthday is required'],
     },
+
     avatarURL: {
       type: String,
       required: true,
     },
+
     token: { type: String },
   },
   { versionKey: false, timestamps: true }
@@ -70,9 +74,19 @@ const loginSchema = Joi.object({
   email: Joi.string().email({ minDomainSegments: 2 }).required(),
 });
 
+const idValidation = (req, res, next) => {
+  if (ObjectId.isValid(req.params.noticeId)) {
+    if (String(new ObjectId(req.params.noticeId)) === req.params.noticeId)
+      return next();
+    return res.status(404).json({ message: 'Not found' });
+  }
+  return res.status(404).json({ message: 'Not found' });
+};
+
 const schemas = {
   signupSchema,
   loginSchema,
+  idValidation,
 };
 
 const User = model('user', userSchema);
