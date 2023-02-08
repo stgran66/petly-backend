@@ -12,6 +12,7 @@ const {
   newsRouter,
   serviceRouter,
   noticeRouter,
+  userRouter,
   healthzRouter,
 } = require('./routes/api/');
 
@@ -32,6 +33,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/news', newsRouter);
 app.use('/api/services', serviceRouter);
 app.use('/api/notices', noticeRouter);
+app.use('/api/user', userRouter);
 // Healtz check
 app.use('/api/healthz', healthzRouter);
 

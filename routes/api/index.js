@@ -3,6 +3,13 @@ const newsRouter = require('./news');
 const serviceRouter = require('./service');
 const noticeRouter = require('./notice');
 const healthzRouter = require('./healthz');
+const userRouter = require('./user');
 
-module.exports = { authRouter, newsRouter, serviceRouter, healthzRouter, noticeRouter };
-
+module.exports = {
+  authRouter,
+  newsRouter,
+  serviceRouter,
+  healthzRouter,
+  noticeRouter,
+  userRouter,
+};
