@@ -6,8 +6,9 @@ const { authenticate } = require('../../middlewares');
 const { schemas } = require('../../models/user');
 
 router.get('/:category', noticeCtrl.listNotices);
-router.get('/:noticeId', noticeCtrl.getNoticeById);
-router.get('/favorite/a', authenticate, userCtrl.listFavorite);
+router.get('/favorite', authenticate, userCtrl.listFavorite);
+router.get('/:noticeId', schemas.idValidation, noticeCtrl.getNoticeById);
+
 router.post(
   '/:noticeId/favorite',
   schemas.idValidation,
