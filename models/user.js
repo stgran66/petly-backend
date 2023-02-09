@@ -65,7 +65,7 @@ const signupSchema = Joi.object({
     .max(13)
     .pattern(/^\+380\d{3}\d{2}\d{2}\d{2}$/)
     .messages({
-      'string.pattern.base': `Phone number can contain only 13 symbols: starts from symbol '+' and 12 digits after.`,
+      'string.pattern.base': `Phone number can contain only 13 symbols: starts from  '+380' and 9 digits after.`,
     }),
   birthday: Joi.string().default('00.00.0000'),
 });
