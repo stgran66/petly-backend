@@ -8,6 +8,7 @@ const updateAvatar = require('./updateAvatar');
 const updateUserData = require('./updateUserData');
 const removeFavorite = require('./removeFavorite');
 
+
 module.exports = {
   addToFavorite: ctrlWrapper(addToFavorite),
   getUserData: ctrlWrapper(getUserData),
