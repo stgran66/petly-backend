@@ -26,8 +26,8 @@ const cloudinaryUpload = (name, path) => {
       console.log(err);
     });
   const url = cloudinary.url(publicId, {
-    width: 161,
-    height: 161,
+    width: 233,
+    height: 233,
     crop: 'fill',
   });
   console.log(url);

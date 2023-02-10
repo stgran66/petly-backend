@@ -18,4 +18,20 @@ router.post(
 
 router.delete('/pet/:id', authenticate, validateId, ctrl.deletePet);
 
+// Avatar update
+router.patch(
+  '/avatars',
+  authenticate,
+  upload.single('avatar'),
+  ctrl.updateAvatar
+);
+
+// User data update
+router.put(
+  '/update',
+  authenticate,
+  validation(schemas.updateUserSchema),
+  ctrl.updateUserData
+);
+
 module.exports = router;
