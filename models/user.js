@@ -100,7 +100,9 @@ const signupSchema = Joi.object({
     .messages({
       'string.pattern.base': `Phone number can contain only 13 symbols: starts from  '+380' and 9 digits after.`,
     }),
-  birthday: Joi.string().default('00.00.0000'),
+  birthday: Joi.string()
+    .default('00.00.0000')
+    .pattern(/^([0-2][0-9]|(3)[0-1])\.(((0)[0-9])|((1)[0-2]))\.\d{4}$/),
 });
 
 const loginSchema = Joi.object({
@@ -110,7 +112,8 @@ const loginSchema = Joi.object({
 
 const idValidation = (req, res, next) => {
   if (ObjectId.isValid(req.params.noticeId)) {
-    if (String(new ObjectId(req.params.noticeId)) === req.params.noticeId) return next();
+    if (String(new ObjectId(req.params.noticeId)) === req.params.noticeId)
+      return next();
     return res.status(404).json({ message: 'Not found' });
   }
   return res.status(404).json({ message: 'Not found' });
@@ -119,19 +122,55 @@ const idValidation = (req, res, next) => {
 const User = model('user', userSchema);
 
 const addPetSchema = Joi.object({
-  name: Joi.string().min(2).max(16).message('name should be 2 to 16 characters long').required(),
-  breed: Joi.string().min(2).max(16).message('breed should be 2 to 16 characters long').required(),
-  comments: Joi.string().min(8).max(120).message('comment should be 8 to 120 characters long'),
+  name: Joi.string()
+    .min(2)
+    .max(16)
+    .message('name should be 2 to 16 characters long')
+    .required(),
+  breed: Joi.string()
+    .min(2)
+    .max(16)
+    .message('breed should be 2 to 16 characters long')
+    .required(),
+  comments: Joi.string()
+    .min(8)
+    .max(120)
+    .message('comment should be 8 to 120 characters long'),
   birthday: Joi.string()
     .pattern(/^([0-2][0-9]|(3)[0-1])\.(((0)[0-9])|((1)[0-2]))\.\d{4}$/)
     .message('birthday should be in dd.mm.yyyy format'),
 });
+
+const updateUserSchema = Joi.object({
+  email: Joi.string()
+    .min(10)
+    .max(63)
+    .pattern(/^(?!-)[a-zA-Z0-9_.-]+@[a-zA-Z0-9.-]+$/)
+    .email({ minDomainSegments: 2 })
+    .messages({
+      'string.pattern.base': `email can contain only latin letters, numbers and symbols . -  _ (dot, hyphen, underscore) and can't start from hyphen`,
+    }),
+
+  name: Joi.string(),
+  city: Joi.string(),
+  phone: Joi.string()
+    .min(13)
+    .max(13)
+    .pattern(/^\+380\d{3}\d{2}\d{2}\d{2}$/)
+    .messages({
+      'string.pattern.base': `Phone number can contain only 13 symbols: starts from  '+380' and 9 digits after.`,
+    }),
+  birthday: Joi.string()
+    .pattern(/^([0-2][0-9]|(3)[0-1])\.(((0)[0-9])|((1)[0-2]))\.\d{4}$/)
+    .message('birthday should be in dd.mm.yyyy format'),
+}).min(1);
 
 const schemas = {
   signupSchema,
   loginSchema,
   idValidation,
   addPetSchema,
+  updateUserSchema,
 };
 
 module.exports = {
