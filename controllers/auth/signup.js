@@ -5,7 +5,11 @@ const gravatar = require('gravatar');
 // const { BASE_URL } = process.env;
 
 const signup = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password, name } = req.body;
+  if (!email || !password || !name) {
+    res.status(400).json({ message: 'Name, email or password not found' });
+    return;
+  }
 
   const user = await User.findOne({ email });
 
@@ -16,13 +20,11 @@ const signup = async (req, res) => {
 
   const hashPassword = await bcrypt.hash(password, 10);
   const avatarURL = gravatar.url(email);
-  // const verificationToken = nanoid();
 
   const newUser = await User.create({
     ...req.body,
     password: hashPassword,
     avatarURL,
-    // verificationToken,
   });
 
   res.status(201).json({
