@@ -39,7 +39,9 @@
   "paths": {
     "/api/auth/signup": {
       "post": {
-        "tags": ["auth"],
+        "tags": [
+          "auth"
+        ],
         "summary": "Register new user",
         "description": "Register new user",
         "requestBody": {
@@ -81,14 +83,19 @@
         },
         "security": [
           {
-            "petstore_auth": ["write:pets", "read:pets"]
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
           }
         ]
       }
     },
     "/api/auth/login": {
       "post": {
-        "tags": ["auth"],
+        "tags": [
+          "auth"
+        ],
         "summary": "Log user in",
         "description": "Log user in",
         "requestBody": {
@@ -130,14 +137,19 @@
         },
         "security": [
           {
-            "petstore_auth": ["write:pets", "read:pets"]
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
           }
         ]
       }
     },
     "/api/auth/logout": {
       "get": {
-        "tags": ["auth"],
+        "tags": [
+          "auth"
+        ],
         "summary": "Log user out",
         "description": "Log user out",
         "parameters": [
@@ -171,14 +183,19 @@
         },
         "security": [
           {
-            "petstore_auth": ["write:pets", "read:pets"]
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
           }
         ]
       }
     },
     "/api/auth/avatars": {
       "patch": {
-        "tags": ["auth"],
+        "tags": [
+          "auth"
+        ],
         "summary": "Update user's avatar",
         "description": "Update user's avatar",
         "parameters": [
@@ -231,14 +248,19 @@
             "api_key": []
           },
           {
-            "petstore_auth": ["write:pets", "read:pets"]
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
           }
         ]
       }
     },
     "/api/auth/update": {
       "put": {
-        "tags": ["auth"],
+        "tags": [
+          "auth"
+        ],
         "summary": "Updates user data",
         "description": "Updates user data",
         "parameters": [
@@ -272,7 +294,9 @@
     },
     "/api/notices/{category}": {
       "get": {
-        "tags": ["notices"],
+        "tags": [
+          "notices"
+        ],
         "summary": "Gets notices by category",
         "description": "Gets notices by category",
         "parameters": [
@@ -300,14 +324,19 @@
         },
         "security": [
           {
-            "petstore_auth": ["write:pets", "read:pets"]
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
           }
         ]
       }
     },
     "/api/notices/{noticeId}": {
       "get": {
-        "tags": ["notices"],
+        "tags": [
+          "notices"
+        ],
         "summary": "Gets notice by id",
         "description": "Gets notice by id",
         "parameters": [
@@ -335,14 +364,19 @@
         },
         "security": [
           {
-            "petstore_auth": ["write:pets", "read:pets"]
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
           }
         ]
       }
     },
     "/api/notices/favorite": {
       "get": {
-        "tags": ["notices"],
+        "tags": [
+          "notices"
+        ],
         "summary": "Gets notices by favorite status",
         "description": "Gets notices by favorite status",
         "parameters": [
@@ -370,14 +404,19 @@
         },
         "security": [
           {
-            "petstore_auth": ["write:pets", "read:pets"]
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
           }
         ]
       }
     },
     "/api/notices/{noticeId}/favorite": {
       "post": {
-        "tags": ["notices"],
+        "tags": [
+          "notices"
+        ],
         "summary": "Adds notice to favorite",
         "description": "Adds notice to favorite",
         "parameters": [
@@ -414,14 +453,19 @@
         },
         "security": [
           {
-            "petstore_auth": ["write:pets", "read:pets"]
+            "petstore_auth": [
+              "write:pets",
+              "read:pets"
+            ]
           }
         ]
       }
     },
     "/api/user": {
       "get": {
-        "tags": ["user"],
+        "tags": [
+          "user"
+        ],
         "summary": "Returns user data",
         "description": "Returns user data",
         "parameters": [
@@ -458,9 +502,102 @@
         ]
       }
     },
+    "/api/user/pet": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Adds new user pet",
+        "description": "Adds new user pet",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The token issued to the current user.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
+    "/api/user/pet/{petId}": {
+      "delete": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Deletes pet from user collection",
+        "description": "Deletes pet from user collection",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The token issued to the current user.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "petId",
+            "in": "path",
+            "description": "Pet Id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "api_key": []
+          }
+        ]
+      }
+    },
     "/api/news": {
       "get": {
-        "tags": ["news"],
+        "tags": [
+          "news"
+        ],
         "summary": "Gets all news",
         "description": "Gets all news",
         "responses": {
@@ -482,7 +619,9 @@
     },
     "/api/services": {
       "get": {
-        "tags": ["services"],
+        "tags": [
+          "services"
+        ],
         "summary": "Gets info about partners services",
         "description": "Gets info about partners services",
         "responses": {
@@ -512,7 +651,9 @@
     },
     "/api/healthz": {
       "get": {
-        "tags": ["healthz"],
+        "tags": [
+          "healthz"
+        ],
         "summary": "Health check for server",
         "description": "If server is operational always gets 200",
         "responses": {
@@ -580,7 +721,11 @@
             "example": "00.00.0000"
           }
         },
-        "required": ["email", "password", "name"],
+        "required": [
+          "email",
+          "password",
+          "name"
+        ],
         "xml": {
           "name": "user"
         }
@@ -617,7 +762,11 @@
           },
           "category": {
             "type": "string",
-            "enum": ["sell", "lost-found", "for-free"]
+            "enum": [
+              "sell",
+              "lost-found",
+              "for-free"
+            ]
           }
         },
         "xml": {

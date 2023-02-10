@@ -20,6 +20,7 @@ const authenticate = async (req, res, next) => {
       return;
     }
     req.user = user;
+
     next();
   } catch (error) {
     if (error.message === 'Invalid signature') {

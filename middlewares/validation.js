@@ -1,9 +1,10 @@
+const httpError = require('../helpers/httpError');
+
 const validation = schema => {
   const func = (req, res, next) => {
     const { error } = schema.validate(req.body);
-    if (validation.error) {
-      error.status = 400;
-      next(error);
+    if (error) {
+      next(httpError(400, error.message));
     }
     next();
   };
