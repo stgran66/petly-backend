@@ -4,8 +4,6 @@ const getUserData = require('./getUserData');
 const listFavorite = require('./listFavorite');
 const addPet = require('./addPet');
 const deletePet = require('./deletePet');
-const updateAvatar = require('./updateAvatar');
-const updateUserData = require('./updateUserData');
 
 module.exports = {
   addToFavorite: ctrlWrapper(addToFavorite),
@@ -13,6 +11,4 @@ module.exports = {
   listFavorite: ctrlWrapper(listFavorite),
   addPet: ctrlWrapper(addPet),
   deletePet: ctrlWrapper(deletePet),
-  updateAvatar: ctrlWrapper(updateAvatar),
-  updateUserData: ctrlWrapper(updateUserData),
 };
