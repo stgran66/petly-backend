@@ -8,7 +8,7 @@ const { schemas: noticeSchemas } = require('../../models/notice');
 
 router.get('/:category', noticeCtrl.listNotices);
 router.get('/favorite', authenticate, userCtrl.listFavorite);
-router.get('/my-notices', authenticate, noticeCtrl.listOwnersNotices);
+router.get('/own', authenticate, noticeCtrl.listOwnersNotices);
 router.get('/:noticeId', userSchemas.idValidation, noticeCtrl.getNoticeById);
 
 router.post(
