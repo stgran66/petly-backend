@@ -30,4 +30,7 @@ router.put(
   ctrl.updateUserData
 );
 
+// Gets current user by token
+router.get('/current', authenticate, ctrl.getCurrent);
+
 module.exports = router;
