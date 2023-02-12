@@ -6,7 +6,7 @@ const removeNotice = async (req, res, next) => {
   if (!result) {
     return res.status(404).json({ message: 'Not found' });
   }
-  res.status(200).json({ message: 'contact deleted' });
+  res.status(200).json({ message: 'notice deleted' });
 };
 
 module.exports = removeNotice;
