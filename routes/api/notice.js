@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { notice: noticeCtrl } = require('../../controllers');
 const { user: userCtrl } = require('../../controllers');
-const { authenticate } = require('../../middlewares');
+const { authenticate, upload } = require('../../middlewares');
 const { schemas: userSchemas } = require('../../models/user');
 const { schemas: noticeSchemas } = require('../../models/notice');
 
@@ -26,6 +26,7 @@ router.post(
 router.post(
   '/',
   authenticate,
+  upload.single('imageUrl'),
   noticeSchemas.addNoticeValidation,
   noticeCtrl.addNotice
 );
