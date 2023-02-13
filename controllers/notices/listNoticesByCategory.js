@@ -1,4 +1,5 @@
 const { Notice } = require('../../models/notice');
+const { httpError } = require('../../helpers');
 
 const listNotices = async (req, res, next) => {
   const { category } = req.params;
@@ -7,9 +8,19 @@ const listNotices = async (req, res, next) => {
     category === 'lost-found' ||
     category === 'for-free'
   ) {
-    res.json(await Notice.find({ category }));
+    let notices = await Notice.find({ category });
+
+    if (req.user) {
+      notices = notices.map(notice => {
+        return req.user.favorite.includes(notice._id)
+          ? { ...notice, favorite: true }
+          : { ...notice, favorite: false };
+      });
+    }
+
+    return res.json(notices);
   }
-  next();
+  httpError(404);
 };
 
 module.exports = listNotices;
