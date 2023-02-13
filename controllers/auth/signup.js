@@ -40,6 +40,7 @@ const signup = async (req, res) => {
     email: newUser.email,
     city: newUser.city,
     phone: newUser.phone,
+    token: newUser.token,
   });
 };
 
