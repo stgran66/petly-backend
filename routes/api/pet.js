@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { user: ctrl } = require('../../controllers');
+const { pet: ctrl } = require('../../controllers');
 const { authenticate, validation, upload } = require('../../middlewares');
-const { validateId } = require('../../middlewares');
 const { addPetSchema } = require('../../models/pet');
+const { validateId } = require('../../middlewares');
 
 // get user data
 router.get('/', authenticate, ctrl.getUserData);
