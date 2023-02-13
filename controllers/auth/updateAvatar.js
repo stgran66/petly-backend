@@ -6,7 +6,7 @@ const updateAvatar = async (req, res) => {
 
   const { path, filename } = req.file;
 
-  const avatarURL = cloudinaryUpload(filename, path);
+  const avatarURL = await cloudinaryUpload(filename, path);
 
   await User.findByIdAndUpdate(_id, { avatarURL });
   res.json({ avatarURL });

@@ -17,21 +17,18 @@ const cloudinaryUpload = (name, path) => {
   const publicId = `${name}_photo_${nanoid()}`;
   const image = cloudinary.uploader.upload(path, { public_id: publicId });
 
-  image
+  return image
     .then(data => {
-      // console.log(data);
-      // console.log(data.secure_url);
+      const url = cloudinary.url(publicId, {
+        width: 233,
+        height: 233,
+        crop: 'fill',
+      });
+      return url;
     })
     .catch(err => {
       console.log(err);
     });
-  const url = cloudinary.url(publicId, {
-    width: 233,
-    height: 233,
-    crop: 'fill',
-  });
-  console.log(url);
-  return url;
 };
 
 module.exports = cloudinaryUpload;

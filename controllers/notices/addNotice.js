@@ -7,7 +7,7 @@ const addNotice = async (req, res, next) => {
   const { path } = req.file;
   const { _id: owner } = req.user;
   const avatarURL = path
-    ? cloudinaryUpload(name, path)
+    ? await cloudinaryUpload(name, path)
     : gravatar.url(req.body.name);
 
   const result = await Notice.create({
