@@ -67,7 +67,6 @@ const addNoticeValidation = (req, res, next) => {
         .pattern(/^[1-9][0-9]*$/)
         .message('price cannot starts from zero')
         .required(),
-      age: Joi.string().message('price cannot starts from zero').required(),
       name: Joi.string()
         .min(2)
         .max(16)
@@ -111,7 +110,6 @@ const addNoticeValidation = (req, res, next) => {
         .min(1)
         .pattern(/^[1-9][0-9]*$/)
         .message('price cannot starts from zero'),
-      age: Joi.string().message('price cannot starts from zero'),
       name: Joi.string()
         .min(2)
         .max(16)
