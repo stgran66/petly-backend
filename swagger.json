@@ -48,49 +48,7 @@
           "description": "Register new user",
           "content": {
             "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "email": {
-                    "type": "string",
-                    "example": "john@email.com",
-                    "minLength": 10,
-                    "maxLength": 63,
-                    "format": "email",
-                    "pattern": "^(?!-)[a-zA-Z0-9_.-]+@[a-zA-Z0-9.-]+$"
-                  },
-                  "password": {
-                    "type": "string",
-                    "example": "qwerty123",
-                    "minLength": 7,
-                    "maxLength": 32
-                  },
-                  "name": {
-                    "type": "string",
-                    "example": "John"
-                  },
-                  "city": {
-                    "type": "string",
-                    "example": "Kyiv"
-                  },
-                  "phone": {
-                    "type": "string",
-                    "minLength": 13,
-                    "maxLength": 13,
-                    "pattern": "^\\+380\\d{3}\\d{2}\\d{2}\\d{2}$",
-                    "example": "+380801112233"
-                  },
-                  "birthday": {
-                    "type": "string",
-                    "example": "00.00.0000"
-                  }
-                },
-                "required": [
-                  "email",
-                  "password",
-                  "name"
-                ]
-              }
+              "schema": "$ref"
             }
           },
           "required": true
@@ -352,20 +310,21 @@
             "description": "category of notices",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "enum": [
+                "sell",
+                "lost-found",
+                "for-free"
+              ]
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Pet"
-                }
-              }
-            }
+            "description": "successful operation"
+          },
+          "404": {
+            "description": "not found"
           }
         }
       }
@@ -390,14 +349,48 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Pet"
-                }
-              }
+            "description": "successful operation"
+          },
+          "404": {
+            "description": "not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "notices"
+        ],
+        "summary": "Deletes notice",
+        "description": "Deletes notice",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The token issued to the current user.",
+            "required": true,
+            "schema": {
+              "type": "string"
             }
+          },
+          {
+            "name": "noticeId",
+            "in": "path",
+            "description": "category of notices",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "401": {
+            "description": "not authorized"
+          },
+          "404": {
+            "description": "not found"
           }
         }
       }
@@ -422,14 +415,38 @@
         ],
         "responses": {
           "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Pet"
-                }
-              }
+            "description": "successful operation"
+          },
+          "401": {
+            "description": "not authorized"
+          }
+        }
+      }
+    },
+    "/api/notices/own": {
+      "get": {
+        "tags": [
+          "notices"
+        ],
+        "summary": "Gets notices created by user",
+        "description": "Gets notices created by user",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The token issued to the current user.",
+            "required": true,
+            "schema": {
+              "type": "string"
             }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "401": {
+            "description": "not authorized"
           }
         }
       }
@@ -454,7 +471,7 @@
           {
             "name": "noticeId",
             "in": "path",
-            "description": "category of notices",
+            "description": "notice Id",
             "required": true,
             "schema": {
               "type": "string"
@@ -462,15 +479,97 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "successful operation",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Pet"
-                }
+          "201": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "wrong id"
+          },
+          "401": {
+            "description": "not authorized"
+          }
+        }
+      }
+    },
+    "/api/notices/{noticeId}/remove-favorite": {
+      "post": {
+        "tags": [
+          "notices"
+        ],
+        "summary": "Removes notice from favorite",
+        "description": "Removes notice from favorite",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The token issued to the current user.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "noticeId",
+            "in": "path",
+            "description": "notice Id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "wrong id"
+          },
+          "401": {
+            "description": "not authorized"
+          }
+        }
+      }
+    },
+    "/api/notices": {
+      "post": {
+        "tags": [
+          "notices"
+        ],
+        "summary": "Creates new notice",
+        "description": "Creates new notice",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The token issued to the current user.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Register new user",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "$ref": "#/components/schemas/Notice"
               }
             }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "validation error"
+          },
+          "401": {
+            "description": "not authorized"
           }
         }
       }
@@ -727,28 +826,47 @@
         "type": "object",
         "properties": {
           "title": {
-            "type": "string"
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 48,
+            "pattern": "/^[a-zA-zа-яіїєА-ЯІЇЄ,.! ]+$/",
+            "example": "Puppy for adoption"
           },
           "breed": {
-            "type": "string"
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 24,
+            "example": "Retriever"
           },
           "place": {
-            "type": "string"
-          },
-          "age": {
-            "type": "string"
+            "type": "string",
+            "minLength": 4,
+            "maxLength": 60,
+            "example": "Kyiv"
           },
           "price": {
-            "type": "string"
+            "type": "string",
+            "minLength": 1,
+            "pattern": "/^[1-9][0-9]*$/",
+            "example": "200$"
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 16,
+            "example": "Goldie"
           },
           "birthday": {
-            "type": "string"
+            "type": "string",
+            "format": "DD.MM.YYYY",
+            "example": "20.10.2015"
           },
           "sex": {
-            "type": "string"
+            "type": "string",
+            "enum": [
+              "male",
+              "female"
+            ]
           },
           "imageUrl": {
             "type": "string"
@@ -762,9 +880,13 @@
             ]
           }
         },
-        "xml": {
-          "name": "notice"
-        }
+        "required": [
+          "title",
+          "name",
+          "sex",
+          "category",
+          "place"
+        ]
       }
     },
     "requestBodies": {
