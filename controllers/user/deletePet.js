@@ -1,23 +1,22 @@
 const { User } = require('../../models');
+const { Pet } = require('../../models');
+
 const httpError = require('../../helpers/httpError');
 
 const deletePet = async (req, res) => {
-  console.log('searching');
   const { id } = req.params;
+  const { _id: owner } = req.user;
 
-  const result = await User.findByIdAndUpdate(
-    { _id: req.user._id },
-    {
-      $pull: { pets: { _id: id } },
-    },
-    { new: true }
-  );
+  const result = await Pet.findByIdAndDelete(id);
 
   if (!result) {
-    console.log(req.params);
-    console.error('not found');
     throw httpError(404);
   }
+
+  await User.findByIdAndUpdate(owner, {
+    $pull: { pets: id },
+  });
+
   res.json({ message: 'pet deleted' });
 };
 
