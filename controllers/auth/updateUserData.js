@@ -5,7 +5,7 @@ const updateUserData = async (req, res) => {
   const body = { ...req.body };
   const updUser = await User.findByIdAndUpdate(_id, body, {
     new: true,
-  });
+  }).populate('pets');
   if (!updUser) {
     res.status(404).json({ message: 'User not found' });
     return;
