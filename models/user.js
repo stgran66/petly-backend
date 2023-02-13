@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const Joi = require('joi');
+const Joi = require('joi').extend(require('@joi/date'));
 const { handleMongooseError } = require('../helpers');
 const ObjectId = require('mongoose').Types.ObjectId;
 
@@ -84,9 +84,15 @@ const signupSchema = Joi.object({
     .messages({
       'string.pattern.base': `Phone number can contain only 13 symbols: starts from  '+380' and 9 digits after.`,
     }),
-  birthday: Joi.string()
+  birthday: Joi.date()
     .default('00.00.0000')
-    .pattern(/^([0-2][0-9]|(3)[0-1])\.(((0)[0-9])|((1)[0-2]))\.\d{4}$/),
+    .min('01.01.1900')
+    .max('now')
+    .format(['DD.MM.YYYY'])
+    .utc()
+    .messages({
+      'string.pattern.base': `birthday field cannot be newer than today and should be in DD.MM.YYYY format`,
+    }),
 });
 
 const loginSchema = Joi.object({
@@ -136,9 +142,15 @@ const updateUserSchema = Joi.object({
     .messages({
       'string.pattern.base': `Phone number can contain only 13 symbols: starts from  '+380' and 9 digits after.`,
     }),
-  birthday: Joi.string()
-    .pattern(/^([0-2][0-9]|(3)[0-1])\.(((0)[0-9])|((1)[0-2]))\.\d{4}$/)
-    .message('birthday should be in dd.mm.yyyy format'),
+  birthday: Joi.date()
+    .default('00.00.0000')
+    .min('01.01.1900')
+    .max('now')
+    .format(['DD.MM.YYYY'])
+    .utc()
+    .messages({
+      'string.pattern.base': `birthday field cannot be newer than today and should be in DD.MM.YYYY format`,
+    }),
 }).min(1);
 
 const schemas = {

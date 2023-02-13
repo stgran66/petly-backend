@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const Joi = require('joi');
+const Joi = require('joi').extend(require('@joi/date'));
 const { handleMongooseError } = require('../helpers');
 
 const petSchema = Schema(
@@ -49,9 +49,15 @@ const addPetSchema = Joi.object({
     .min(8)
     .max(120)
     .message('comment should be 8 to 120 characters long'),
-  birthday: Joi.string()
-    .pattern(/^([0-2][0-9]|(3)[0-1])\.(((0)[0-9])|((1)[0-2]))\.\d{4}$/)
-    .message('birthday should be in dd.mm.yyyy format'),
+  birthday: Joi.date()
+    .default('00.00.0000')
+    .min('01.01.1900')
+    .max('now')
+    .format(['DD.MM.YYYY'])
+    .utc()
+    .messages({
+      'string.pattern.base': `birthday field cannot be newer than today and should be in DD.MM.YYYY format`,
+    }),
 });
 
 petSchema.post('save', handleMongooseError);
