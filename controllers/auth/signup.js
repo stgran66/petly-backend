@@ -3,6 +3,8 @@ const bcrypt = require('bcryptjs');
 const gravatar = require('gravatar');
 // const { nanoid } = require('nanoid');
 // const { BASE_URL } = process.env;
+const jwt = require('jsonwebtoken');
+const { SECRET_KEY } = process.env;
 
 const signup = async (req, res) => {
   const { email, password, name } = req.body;
@@ -21,10 +23,16 @@ const signup = async (req, res) => {
   const hashPassword = await bcrypt.hash(password, 10);
   const avatarURL = gravatar.url(email);
 
+  const payload = {
+    email: req.email,
+  };
+  const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '20h' });
+
   const newUser = await User.create({
     ...req.body,
     password: hashPassword,
     avatarURL,
+    token,
   });
 
   res.status(201).json({
