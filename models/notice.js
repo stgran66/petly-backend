@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const Joi = require('joi');
+const Joi = require('joi').extend(require('@joi/date'));
 
 const noticeSchema = new Schema({
   title: {
@@ -73,10 +73,14 @@ const addNoticeValidation = (req, res, next) => {
         .message('name should be from 2 to 16 symbols')
         .required(),
       birthday: Joi.date()
+        .default('00.00.0000')
+        .min('01.01.1900')
         .max('now')
         .format(['DD.MM.YYYY'])
         .utc()
-        .message('birthday should be in DD.MM.YYYY format'),
+        .messages({
+          'string.pattern.base': `birthday field cannot be newer than today and should be in DD.MM.YYYY format`,
+        }),
       sex: Joi.string().valid('female', 'male').required(),
       comments: Joi.string()
         .min(8)

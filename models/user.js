@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const Joi = require('joi');
+const Joi = require('joi').extend(require('@joi/date'));
 const { handleMongooseError } = require('../helpers');
 const ObjectId = require('mongoose').Types.ObjectId;
 
@@ -71,12 +71,20 @@ const signupSchema = Joi.object({
     })
     .required(),
   name: Joi.string()
+    .min(2)
+    .max(16)
     .pattern(/^[^ ][a-zA-zа-яіїєА-ЯІЇЄ ]+$/)
     .messages({
-      'string.pattern.base': `name can contain only Latin and Cyrillic characters and can't start from spaces`,
+      'string.pattern.base': `name can contain only Latin and Cyrillic characters, 2 - 16 symbols and can't start from spaces`,
     })
     .required(),
-  city: Joi.string(),
+  city: Joi.string()
+    .min(2)
+    .max(19)
+    .pattern(/^[^ -,][a-zA-zа-яіїєА-ЯІЇЄ, -]+[^ -]$/)
+    .messages({
+      'string.pattern.base': `city can contain only Latin and Cyrillic characters, 2 - 19 symbols and can't start or end with spaces and hyphen`,
+    }),
   phone: Joi.string()
     .min(13)
     .max(13)
@@ -84,9 +92,15 @@ const signupSchema = Joi.object({
     .messages({
       'string.pattern.base': `Phone number can contain only 13 symbols: starts from  '+380' and 9 digits after.`,
     }),
-  birthday: Joi.string()
+  birthday: Joi.date()
     .default('00.00.0000')
-    .pattern(/^([0-2][0-9]|(3)[0-1])\.(((0)[0-9])|((1)[0-2]))\.\d{4}$/),
+    .min('01.01.1900')
+    .max('now')
+    .format(['DD.MM.YYYY'])
+    .utc()
+    .messages({
+      'string.pattern.base': `birthday field cannot be newer than today and should be in DD.MM.YYYY format`,
+    }),
 });
 
 const loginSchema = Joi.object({
@@ -122,13 +136,20 @@ const updateUserSchema = Joi.object({
     .messages({
       'string.pattern.base': `email can contain only latin letters, numbers and symbols . -  _ (dot, hyphen, underscore) and can't start from hyphen`,
     }),
-
   name: Joi.string()
+    .min(2)
+    .max(16)
     .pattern(/^[^ ][a-zA-zа-яіїєА-ЯІЇЄ ]+$/)
     .messages({
-      'string.pattern.base': `name can contain only Latin and Cyrillic characters, minimim 2 symbpls and can't start from spaces`,
+      'string.pattern.base': `name can contain only Latin and Cyrillic characters, 2 - 16 symbols and can't start from spaces`,
     }),
-  city: Joi.string(),
+  city: Joi.string()
+    .min(2)
+    .max(19)
+    .pattern(/^[^ -,][a-zA-zа-яіїєА-ЯІЇЄ, -]+[^ -]$/)
+    .messages({
+      'string.pattern.base': `city can contain only Latin and Cyrillic characters, 2 - 19 symbols and can't start or end with spaces and hyphen`,
+    }),
   phone: Joi.string()
     .min(13)
     .max(13)
@@ -136,9 +157,15 @@ const updateUserSchema = Joi.object({
     .messages({
       'string.pattern.base': `Phone number can contain only 13 symbols: starts from  '+380' and 9 digits after.`,
     }),
-  birthday: Joi.string()
-    .pattern(/^([0-2][0-9]|(3)[0-1])\.(((0)[0-9])|((1)[0-2]))\.\d{4}$/)
-    .message('birthday should be in dd.mm.yyyy format'),
+  birthday: Joi.date()
+    .default('00.00.0000')
+    .min('01.01.1900')
+    .max('now')
+    .format(['DD.MM.YYYY'])
+    .utc()
+    .messages({
+      'string.pattern.base': `birthday field cannot be newer than today and should be in DD.MM.YYYY format`,
+    }),
 }).min(1);
 
 const schemas = {
