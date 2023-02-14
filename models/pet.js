@@ -7,7 +7,6 @@ const petSchema = Schema(
     name: {
       type: String,
       required: [true, 'Pet name is required'],
-      unique: true,
     },
     birthday: {
       type: String,
@@ -38,11 +37,13 @@ const addPetSchema = Joi.object({
   name: Joi.string()
     .min(2)
     .max(16)
+    .pattern(/^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/)
     .message('name should be 2 to 16 characters long')
     .required(),
   breed: Joi.string()
     .min(2)
-    .max(16)
+    .max(24)
+    .pattern(/^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/)
     .message('breed should be 2 to 16 characters long')
     .required(),
   comments: Joi.string()
