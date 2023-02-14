@@ -2,13 +2,16 @@ const express = require('express');
 const router = express.Router();
 const { notice: noticeCtrl } = require('../../controllers');
 const { user: userCtrl } = require('../../controllers');
-const { authenticate, upload, checkAuth } = require('../../middlewares');
+const { authenticate, upload } = require('../../middlewares');
 const { schemas: userSchemas } = require('../../models/user');
 const { schemas: noticeSchemas } = require('../../models/notice');
 
-router.get('/:category', checkAuth, noticeCtrl.listNotices);
+router.get('/:category', noticeCtrl.listNotices);
+
 router.get('/favorite', authenticate, userCtrl.listFavorite);
+
 router.get('/own', authenticate, noticeCtrl.listOwnersNotices);
+
 router.get('/:noticeId', userSchemas.idValidation, noticeCtrl.getNoticeById);
 
 router.post(

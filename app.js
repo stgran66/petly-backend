@@ -28,7 +28,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
 
-// auth page
 app.use('/api/auth', authRouter);
 app.use('/api/news', newsRouter);
 app.use('/api/services', serviceRouter);
