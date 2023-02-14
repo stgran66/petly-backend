@@ -42,7 +42,7 @@ const addPetSchema = Joi.object({
     .required(),
   breed: Joi.string()
     .min(2)
-    .max(24)
+    .max(16)
     .pattern(/^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/)
     .message('breed should be 2 to 16 characters long')
     .required(),
