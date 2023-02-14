@@ -107,23 +107,32 @@ const addNoticeValidation = (req, res, next) => {
       breed: Joi.string()
         .min(2)
         .max(16)
-        .message('breed should be from 2 to 24 symbols'),
+        .message('breed should be from 2 to 16 symbols')
+        .allow(null, ''),
       place: Joi.string().min(4).max(60).required(),
+      price: Joi.string().allow('', null),
       name: Joi.string()
         .min(2)
         .max(16)
-        .message('name should be from 2 to 16 symbols'),
+        .message('name should be from 2 to 16 symbols')
+        .allow(null, ''),
       birthday: Joi.date()
+        .default('00.00.0000')
+        .min('01.01.1900')
         .max('now')
         .format(['DD.MM.YYYY'])
         .utc()
-        .message('birthday should be in DD.MM.YYYY format'),
+        .messages({
+          'string.pattern.base': `birthday field cannot be newer than today and should be in DD.MM.YYYY format`,
+        })
+        .allow(null, ''),
       sex: Joi.string().valid('female', 'male').required(),
       comments: Joi.string()
         .min(8)
         .max(120)
-        .message('breed should be from 8 to 120 symbols'),
-      imageUrl: Joi.string().required(),
+        .message('breed should be from 8 to 120 symbols')
+        .allow(null, ''),
+      imageUrl: Joi.string(),
       category: Joi.string().valid('sell', 'lost-found', 'for-free').required(),
     });
     const validationResult = schema.validate(req.body);
