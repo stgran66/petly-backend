@@ -109,10 +109,6 @@ const addNoticeValidation = (req, res, next) => {
         .max(16)
         .message('breed should be from 2 to 24 symbols'),
       place: Joi.string().min(4).max(60).required(),
-      price: Joi.string()
-        .min(1)
-        .pattern(/^[1-9][0-9]*$/)
-        .message('price cannot starts from zero'),
       name: Joi.string()
         .min(2)
         .max(16)
