@@ -83,7 +83,7 @@ const signupSchema = Joi.object({
     .max(19)
     .pattern(/^[^ -,][a-zA-zа-яіїєА-ЯІЇЄ, -]+[^ -]$/)
     .messages({
-      'string.pattern.base': `city can contain only Latin and Cyrillic characters, 2 - 19 symbols and can't start or end with spaces and hyphen`,
+      'string.pattern.base': `city can contain only Latin and Cyrillic characters, 3 - 19 symbols and can't start or end with spaces and hyphen`,
     }),
   phone: Joi.string()
     .min(13)
