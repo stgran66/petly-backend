@@ -21,7 +21,8 @@ const signup = async (req, res) => {
   }
 
   const hashPassword = await bcrypt.hash(password, 10);
-  const avatarURL = '../../public/avatars/noavatar.jpg';
+  const avatarURL =
+    'https://res.cloudinary.com/dm3ikbt0t/image/upload/v1676402295/noavatar_zftm3m.jpg';
 
   const newUser = await User.create({
     ...req.body,
