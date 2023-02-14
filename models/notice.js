@@ -47,8 +47,8 @@ const noticeSchema = new Schema({
 });
 
 const addNoticeValidation = (req, res, next) => {
-  const { noticeId } = req.params;
-  if (noticeId === 'sell') {
+  const { category } = req.body;
+  if (category === 'sell') {
     const schema = Joi.object({
       title: Joi.string()
         .min(2)
@@ -58,7 +58,7 @@ const addNoticeValidation = (req, res, next) => {
         .required(),
       breed: Joi.string()
         .min(2)
-        .max(24)
+        .max(16)
         .message('breed should be from 2 to 24 symbols')
         .required(),
       place: Joi.string().min(4).max(60).required(),
@@ -95,9 +95,8 @@ const addNoticeValidation = (req, res, next) => {
         .status(400)
         .json({ message: validationResult.error.details[0].message });
     }
-    next();
   }
-  if (noticeId === 'lost-found' || noticeId === 'for-free') {
+  if (category === 'lost-found' || category === 'for-free') {
     const schema = Joi.object({
       title: Joi.string()
         .min(2)
@@ -107,7 +106,7 @@ const addNoticeValidation = (req, res, next) => {
         .required(),
       breed: Joi.string()
         .min(2)
-        .max(24)
+        .max(16)
         .message('breed should be from 2 to 24 symbols'),
       place: Joi.string().min(4).max(60).required(),
       price: Joi.string()
@@ -137,7 +136,6 @@ const addNoticeValidation = (req, res, next) => {
         .status(400)
         .json({ message: validationResult.error.details[0].message });
     }
-    next();
   }
   next();
 };
