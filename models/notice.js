@@ -19,7 +19,6 @@ const noticeSchema = new Schema({
   name: {
     type: String,
     default: 'my pet',
-    required: true,
   },
   birthday: {
     type: String,
@@ -64,7 +63,7 @@ const addNoticeValidation = (req, res, next) => {
       place: Joi.string().min(4).max(60).required(),
       price: Joi.string()
         .min(1)
-        .pattern(/^[1-9][0-9]*$/)
+        .pattern(/^[1-9][0-9]*\$/)
         .message('price cannot starts from zero')
         .required(),
       name: Joi.string()
