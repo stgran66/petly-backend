@@ -43,6 +43,14 @@ const noticeSchema = new Schema({
   owner: {
     type: Schema.Types.ObjectId,
   },
+  phone: {
+    type: String,
+    default: 'unknown',
+  },
+  email: {
+    type: String,
+    default: 'unknown',
+  },
 });
 
 const addNoticeValidation = (req, res, next) => {
