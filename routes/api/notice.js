@@ -30,7 +30,7 @@ router.post(
   '/',
   authenticate,
   upload.single('imageUrl'),
-  // noticeSchemas.addNoticeValidation,
+  noticeSchemas.addNoticeValidation,
   noticeCtrl.addNotice
 );
 router.delete(
