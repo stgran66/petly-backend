@@ -14,7 +14,7 @@ const noticeSchema = new Schema({
   },
   price: {
     type: String,
-    default: 0,
+    default: '0',
   },
   name: {
     type: String,
@@ -58,13 +58,18 @@ const addNoticeValidation = (req, res, next) => {
       breed: Joi.string()
         .min(2)
         .max(16)
-        .message('breed should be from 2 to 24 symbols')
+        .pattern(/^[a-zA-zа-яіїєА-ЯІЇЄ,.! ]+$/)
+        .message(
+          'breed should be from 2 to 24 symbols and contain only letters'
+        )
         .required(),
       place: Joi.string().min(4).max(60).required(),
       price: Joi.string()
         .min(1)
-        .pattern(/^[1-9][0-9]*\$/)
-        .message('price cannot starts from zero')
+        .pattern(/^[1-9][0-9]* ?(\$|₴)?$/)
+        .message(
+          'price is number not starting from zero and after can be $ or ₴ symbol'
+        )
         .required(),
       name: Joi.string()
         .min(2)
@@ -107,6 +112,7 @@ const addNoticeValidation = (req, res, next) => {
         .min(2)
         .max(16)
         .message('breed should be from 2 to 16 symbols')
+        .pattern(/^[a-zA-zа-яіїєА-ЯІЇЄ,.! ]+$/)
         .allow(null, ''),
       place: Joi.string().min(4).max(60).required(),
       price: Joi.string().allow('', null),
