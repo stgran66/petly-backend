@@ -14,7 +14,7 @@ const noticeSchema = new Schema({
   },
   price: {
     type: String,
-    default: 0,
+    default: '0',
   },
   name: {
     type: String,
@@ -52,24 +52,44 @@ const addNoticeValidation = (req, res, next) => {
       title: Joi.string()
         .min(2)
         .max(48)
-        .pattern(/^[a-zA-zа-яіїєА-ЯІЇЄ,.! ]+$/)
-        .message('title should be from 2 to 48 symbols')
+        .pattern(/^[a-zA-zа-яіїєА-ЯІЇЄ]+[a-zA-zа-яіїєА-ЯІЇЄ,.! ]+$/)
+        .message(
+          'title should be from 2 to 48 symbols and not start from special symbol'
+        )
         .required(),
       breed: Joi.string()
         .min(2)
         .max(16)
-        .message('breed should be from 2 to 24 symbols')
+        .pattern(
+          /^[a-zA-zа-яіїєА-ЯІЇЄ']+(-| )?[a-zA-zа-яіїєА-ЯІЇЄ']+(-| )?[a-zA-zа-яіїєА-ЯІЇЄ']+$/
+        )
+        .message(
+          'breed should be from 2 to 16 symbols and contain only letters with optional dashes and spaces inside'
+        )
         .required(),
-      place: Joi.string().min(4).max(60).required(),
+      place: Joi.string()
+        .min(4)
+        .max(60)
+        .pattern(
+          /^[a-zA-zа-яіїєА-ЯІЇЄ']+(-| )?[a-zA-zа-яіїєА-ЯІЇЄ']+(-| )?[a-zA-zа-яіїєА-ЯІЇЄ']+$/
+        )
+        .required(),
       price: Joi.string()
         .min(1)
-        .pattern(/^[1-9][0-9]*\$/)
-        .message('price cannot starts from zero')
+        .pattern(/^[1-9][0-9]* ?(\$|₴)?$/)
+        .message(
+          'price is number not starting from zero and after can be $ or ₴ symbol'
+        )
         .required(),
       name: Joi.string()
         .min(2)
         .max(16)
-        .message('name should be from 2 to 16 symbols')
+        .message(
+          'name should be from 2 to 16 symbols and contain only letters with optional dashes and spaces inside'
+        )
+        .pattern(
+          /^[a-zA-zа-яіїєА-ЯІЇЄ']+(-| )?[a-zA-zа-яіїєА-ЯІЇЄ']+(-| )?[a-zA-zа-яіїєА-ЯІЇЄ']+$/
+        )
         .required(),
       birthday: Joi.date()
         .default('00.00.0000')
@@ -100,20 +120,38 @@ const addNoticeValidation = (req, res, next) => {
       title: Joi.string()
         .min(2)
         .max(48)
-        .pattern(/^[a-zA-zа-яіїєА-ЯІЇЄ,.! ]+$/)
-        .message('title should be from 2 to 48 symbols')
+        .pattern(/^[a-zA-zа-яіїєА-ЯІЇЄ]+[a-zA-zа-яіїєА-ЯІЇЄ,.! ]+$/)
+        .message(
+          'title should be from 2 to 48 symbols and not start from special symbol'
+        )
         .required(),
       breed: Joi.string()
         .min(2)
         .max(16)
-        .message('breed should be from 2 to 16 symbols')
+        .message(
+          'breed should be from 2 to 16 symbols and contain only letters with optional dashes and spaces inside'
+        )
+        .pattern(
+          /^[a-zA-zа-яіїєА-ЯІЇЄ']+(-| )?[a-zA-zа-яіїєА-ЯІЇЄ']+(-| )?[a-zA-zа-яіїєА-ЯІЇЄ']+$/
+        )
         .allow(null, ''),
-      place: Joi.string().min(4).max(60).required(),
+      place: Joi.string()
+        .min(4)
+        .max(60)
+        .pattern(
+          /^[a-zA-zа-яіїєА-ЯІЇЄ']+(-| )?[a-zA-zа-яіїєА-ЯІЇЄ']+(-| )?[a-zA-zа-яіїєА-ЯІЇЄ']+$/
+        )
+        .required(),
       price: Joi.string().allow('', null),
       name: Joi.string()
         .min(2)
         .max(16)
-        .message('name should be from 2 to 16 symbols')
+        .message(
+          'name should be from 2 to 16 symbols and contain only letters with optional dashes and spaces inside'
+        )
+        .pattern(
+          /^[a-zA-zа-яіїєА-ЯІЇЄ']+(-| )?[a-zA-zа-яіїєА-ЯІЇЄ']+(-| )?[a-zA-zа-яіїєА-ЯІЇЄ']+$/
+        )
         .allow(null, ''),
       birthday: Joi.date()
         .default('00.00.0000')
