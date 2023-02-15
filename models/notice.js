@@ -63,7 +63,11 @@ const addNoticeValidation = (req, res, next) => {
           'breed should be from 2 to 24 symbols and contain only letters'
         )
         .required(),
-      place: Joi.string().min(4).max(60).required(),
+      place: Joi.string()
+        .min(4)
+        .max(60)
+        .pattern(/^[a-zA-zа-яіїєА-ЯІЇЄ,.! ]+$/)
+        .required(),
       price: Joi.string()
         .min(1)
         .pattern(/^[1-9][0-9]* ?(\$|₴)?$/)
@@ -114,7 +118,11 @@ const addNoticeValidation = (req, res, next) => {
         .message('breed should be from 2 to 16 symbols')
         .pattern(/^[a-zA-zа-яіїєА-ЯІЇЄ,.! ]+$/)
         .allow(null, ''),
-      place: Joi.string().min(4).max(60).required(),
+      place: Joi.string()
+        .min(4)
+        .max(60)
+        .pattern(/^[a-zA-zа-яіїєА-ЯІЇЄ,.! ]+$/)
+        .required(),
       price: Joi.string().allow('', null),
       name: Joi.string()
         .min(2)
