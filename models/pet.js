@@ -37,14 +37,22 @@ const addPetSchema = Joi.object({
   name: Joi.string()
     .min(2)
     .max(16)
-    .pattern(/^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/)
-    .message('name should be 2 to 16 characters long')
+    .message(
+      'name should be from 2 to 16 symbols and contain only letters with optional dashes and spaces inside'
+    )
+    .pattern(
+      /^[a-zA-zа-яіїєА-ЯІЇЄ']+(-| )?[a-zA-zа-яіїєА-ЯІЇЄ']+(-| )?[a-zA-zа-яіїєА-ЯІЇЄ']+$/
+    )
     .required(),
   breed: Joi.string()
     .min(2)
     .max(16)
-    .pattern(/^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$/)
-    .message('breed should be 2 to 16 characters long')
+    .pattern(
+      /^[a-zA-zа-яіїєА-ЯІЇЄ']+(-| )?[a-zA-zа-яіїєА-ЯІЇЄ']+(-| )?[a-zA-zа-яіїєА-ЯІЇЄ']+$/
+    )
+    .message(
+      'breed should be from 2 to 16 symbols and contain only letters with optional dashes and spaces inside'
+    )
     .required(),
   comments: Joi.string()
     .min(8)
@@ -61,6 +69,40 @@ const addPetSchema = Joi.object({
     }),
 });
 
+const updatePetSchema = Joi.object({
+  name: Joi.string()
+    .min(2)
+    .max(16)
+    .message(
+      'name should be from 2 to 16 symbols and contain only letters with optional dashes and spaces inside'
+    )
+    .pattern(
+      /^[a-zA-zа-яіїєА-ЯІЇЄ']+(-| )?[a-zA-zа-яіїєА-ЯІЇЄ']+(-| )?[a-zA-zа-яіїєА-ЯІЇЄ']+$/
+    ),
+  breed: Joi.string()
+    .min(2)
+    .max(16)
+    .pattern(
+      /^[a-zA-zа-яіїєА-ЯІЇЄ']+(-| )?[a-zA-zа-яіїєА-ЯІЇЄ']+(-| )?[a-zA-zа-яіїєА-ЯІЇЄ']+$/
+    )
+    .message(
+      'breed should be from 2 to 16 symbols and contain only letters with optional dashes and spaces inside'
+    ),
+  comments: Joi.string()
+    .min(8)
+    .max(120)
+    .message('comment should be 8 to 120 characters long'),
+  birthday: Joi.date()
+    .default('00.00.0000')
+    .min('01.01.1900')
+    .max('now')
+    .format(['DD.MM.YYYY'])
+    .utc()
+    .messages({
+      'string.pattern.base': `birthday field cannot be newer than today and should be in DD.MM.YYYY format`,
+    }),
+}).min(1);
+
 petSchema.post('save', handleMongooseError);
 
 const Pet = model('pet', petSchema);
@@ -68,4 +110,5 @@ const Pet = model('pet', petSchema);
 module.exports = {
   Pet,
   addPetSchema,
+  updatePetSchema,
 };

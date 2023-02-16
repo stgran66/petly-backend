@@ -5,7 +5,7 @@ const listFavorite = require('./listFavorite');
 const addPet = require('./addPet');
 const deletePet = require('./deletePet');
 const removeFavorite = require('./removeFavorite');
-
+const updatePet = require('./updatePet');
 
 module.exports = {
   addToFavorite: ctrlWrapper(addToFavorite),
@@ -14,4 +14,5 @@ module.exports = {
   addPet: ctrlWrapper(addPet),
   deletePet: ctrlWrapper(deletePet),
   removeFavorite: ctrlWrapper(removeFavorite),
+  updatePet: ctrlWrapper(updatePet),
 };
