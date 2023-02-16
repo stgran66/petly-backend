@@ -48,7 +48,9 @@
           "description": "Register new user",
           "content": {
             "application/json": {
-              "schema": "$ref"
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
             }
           },
           "required": true
@@ -317,6 +319,22 @@
                 "for-free"
               ]
             }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "number of query page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "number of notices per page",
+            "schema": {
+              "type": "integer"
+            }
           }
         ],
         "responses": {
@@ -411,6 +429,22 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "number of query page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "number of notices per page",
+            "schema": {
+              "type": "integer"
+            }
           }
         ],
         "responses": {
@@ -438,6 +472,22 @@
             "required": true,
             "schema": {
               "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "number of query page",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "number of notices per page",
+            "schema": {
+              "type": "integer"
             }
           }
         ],
@@ -648,6 +698,78 @@
       }
     },
     "/api/user/pet/{petId}": {
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Updates pet from user collection",
+        "description": "Updates pet from user collection",
+        "parameters": [
+          {
+            "name": "Authorization",
+            "in": "header",
+            "description": "The token issued to the current user.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "petId",
+            "in": "path",
+            "description": "Pet Id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Pet data - at least one field required",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "bobik"
+                  },
+                  "birthday": {
+                    "type": "string",
+                    "example": "00.00.1111"
+                  },
+                  "breed": {
+                    "type": "string",
+                    "example": "Labrador"
+                  },
+                  "photo": {
+                    "type": "string"
+                  },
+                  "comments": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Validation error"
+          },
+          "401": {
+            "description": "Not authorized"
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      },
       "delete": {
         "tags": [
           "user"
@@ -817,10 +939,7 @@
         },
         "required": [
           "name"
-        ],
-        "xml": {
-          "name": "pet"
-        }
+        ]
       },
       "Notice": {
         "type": "object",
