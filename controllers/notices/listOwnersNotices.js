@@ -5,7 +5,9 @@ const listOwnersNotices = async (req, res, next) => {
   const { page = 1, limit = 100 } = req.query;
   const skip = (page - 1) * limit;
   const { id: owner } = req.user;
-  res.json(await Notice.find({ owner }, {}, { skip, limit }));
+  const notices = await Notice.find({ owner }, {}, { skip, limit });
+  const allNotices = await Notice.find({ owner });
+  res.json({ notices, total: allNotices.length });
 };
 
 module.exports = listOwnersNotices;
