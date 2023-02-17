@@ -41,14 +41,14 @@ const addPetSchema = Joi.object({
       'name should be from 2 to 16 symbols and contain only letters with optional dashes and spaces inside'
     )
     .pattern(
-      /^[a-zA-zа-яіїєА-ЯІЇЄ']+(-| )?[a-zA-zа-яіїєА-ЯІЇЄ']+(-| )?[a-zA-zа-яіїєА-ЯІЇЄ']+$/
+      /^[a-zA-zа-яіїєА-ЯІЇЄ']+(-| )?[a-zA-zа-яіїєА-ЯІЇЄ']+(-| )?[a-zA-zа-яіїєА-ЯІЇЄ']*$/
     )
     .required(),
   breed: Joi.string()
     .min(2)
     .max(16)
     .pattern(
-      /^[a-zA-zа-яіїєА-ЯІЇЄ']+(-| )?[a-zA-zа-яіїєА-ЯІЇЄ']+(-| )?[a-zA-zа-яіїєА-ЯІЇЄ']+$/
+      /^[a-zA-zа-яіїєА-ЯІЇЄ']+(-| )?[a-zA-zа-яіїєА-ЯІЇЄ']+(-| )?[a-zA-zа-яіїєА-ЯІЇЄ']*$/
     )
     .message(
       'breed should be from 2 to 16 symbols and contain only letters with optional dashes and spaces inside'
@@ -77,13 +77,13 @@ const updatePetSchema = Joi.object({
       'name should be from 2 to 16 symbols and contain only letters with optional dashes and spaces inside'
     )
     .pattern(
-      /^[a-zA-zа-яіїєА-ЯІЇЄ']+(-| )?[a-zA-zа-яіїєА-ЯІЇЄ']+(-| )?[a-zA-zа-яіїєА-ЯІЇЄ']+$/
+      /^[a-zA-zа-яіїєА-ЯІЇЄ']+(-| )?[a-zA-zа-яіїєА-ЯІЇЄ']+(-| )?[a-zA-zа-яіїєА-ЯІЇЄ']*$/
     ),
   breed: Joi.string()
     .min(2)
     .max(16)
     .pattern(
-      /^[a-zA-zа-яіїєА-ЯІЇЄ']+(-| )?[a-zA-zа-яіїєА-ЯІЇЄ']+(-| )?[a-zA-zа-яіїєА-ЯІЇЄ']+$/
+      /^[a-zA-zа-яіїєА-ЯІЇЄ']+(-| )?[a-zA-zа-яіїєА-ЯІЇЄ']+(-| )?[a-zA-zа-яіїєА-ЯІЇЄ']*$/
     )
     .message(
       'breed should be from 2 to 16 symbols and contain only letters with optional dashes and spaces inside'
