@@ -2,7 +2,7 @@ const { Notice } = require('../../models/notice');
 
 const listNotices = async (req, res, next) => {
   const { category } = req.params;
-  const { page = 1, limit = 100 } = req.query;
+  const { page = 1, limit = 12 } = req.query;
   const skip = (page - 1) * limit;
   if (
     category === 'sell' ||
