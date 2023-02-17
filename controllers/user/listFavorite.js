@@ -4,12 +4,18 @@ const listFavorite = async (req, res, next) => {
   const { id: owner } = req.user;
   const { page = 1, limit = 100 } = req.query;
   const skip = (page - 1) * limit;
-  res.json(
-    await User.findById(owner, 'favorite').populate({
-      path: 'favorite',
-      options: { skip: skip, limit: limit },
-    })
-  );
+
+  const userFavoriteNotices = await User.findById(owner, 'favorite').populate({
+    path: 'favorite',
+    options: { skip: skip, limit: limit },
+  });
+  const totalUserFavorite = await User.findById(owner, 'favorite').populate({
+    path: 'favorite',
+  });
+  res.json({
+    notices: userFavoriteNotices.favorite,
+    total: totalUserFavorite.favorite.length,
+  });
 };
 
 module.exports = listFavorite;

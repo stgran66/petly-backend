@@ -9,9 +9,13 @@ const listNotices = async (req, res, next) => {
     category === 'lost-found' ||
     category === 'for-free'
   ) {
+    const allNotices = await Notice.find({ category });
     const notices = await Notice.find({ category }, {}, { skip, limit });
 
-    return res.json(notices);
+    return res.json({
+      notices,
+      total: allNotices.length,
+    });
   }
   next();
 };
