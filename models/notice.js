@@ -112,7 +112,9 @@ const addNoticeValidation = (req, res, next) => {
       comments: Joi.string()
         .min(8)
         .max(120)
-        .message('breed should be from 8 to 120 symbols'),
+        .message('breed should be from 8 to 120 symbols')
+        .allow(null, ''),
+
       imageUrl: Joi.string(),
       category: Joi.string().valid('sell', 'lost-found', 'for-free').required(),
     });
