@@ -9,6 +9,7 @@ const noticeSchema = new Schema(
     },
     breed: {
       type: String,
+      default: 'unknown',
     },
     place: {
       type: String,
