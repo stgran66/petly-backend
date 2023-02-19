@@ -10,7 +10,9 @@ const listNotices = async (req, res, next) => {
     category === 'for-free'
   ) {
     const allNotices = await Notice.find({ category });
-    const notices = await Notice.find({ category }, {}, { skip, limit });
+    const notices = await Notice.find({ category }, {}, { skip, limit }).sort({
+      createdAt: -1,
+    });
 
     return res.json({
       notices,

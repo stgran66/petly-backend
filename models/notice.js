@@ -1,57 +1,60 @@
 const { Schema, model } = require('mongoose');
 const Joi = require('joi').extend(require('@joi/date'));
 
-const noticeSchema = new Schema({
-  title: {
-    type: String,
-    required: [true, 'title is required'],
+const noticeSchema = new Schema(
+  {
+    title: {
+      type: String,
+      required: [true, 'title is required'],
+    },
+    breed: {
+      type: String,
+    },
+    place: {
+      type: String,
+    },
+    price: {
+      type: String,
+      default: '0',
+    },
+    name: {
+      type: String,
+      default: 'my pet',
+    },
+    birthday: {
+      type: String,
+      default: '00.00.0000',
+    },
+    sex: {
+      type: String,
+      enum: ['male', 'female'],
+      required: true,
+    },
+    comments: {
+      type: String,
+    },
+    imageUrl: {
+      type: String,
+    },
+    category: {
+      type: String,
+      enum: ['sell', 'lost-found', 'for-free'],
+      required: true,
+    },
+    owner: {
+      type: Schema.Types.ObjectId,
+    },
+    phone: {
+      type: String,
+      default: 'unknown',
+    },
+    email: {
+      type: String,
+      default: 'unknown',
+    },
   },
-  breed: {
-    type: String,
-  },
-  place: {
-    type: String,
-  },
-  price: {
-    type: String,
-    default: '0',
-  },
-  name: {
-    type: String,
-    default: 'my pet',
-  },
-  birthday: {
-    type: String,
-    default: '00.00.0000',
-  },
-  sex: {
-    type: String,
-    enum: ['male', 'female'],
-    required: true,
-  },
-  comments: {
-    type: String,
-  },
-  imageUrl: {
-    type: String,
-  },
-  category: {
-    type: String,
-    enum: ['sell', 'lost-found', 'for-free'],
-    required: true,
-  },
-  owner: {
-    type: Schema.Types.ObjectId,
-  },
-  phone: {
-    type: String,
-    default: 'unknown',
-  },
-  email: {
-    type: String,
-    default: 'unknown',
-  },
-});
+  { timestamps: true }
+);
 
 const addNoticeValidation = (req, res, next) => {
   const { category } = req.body;

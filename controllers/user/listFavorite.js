@@ -5,10 +5,14 @@ const listFavorite = async (req, res, next) => {
   const { page = 1, limit = 12 } = req.query;
   const skip = (page - 1) * limit;
 
-  const userFavoriteNotices = await User.findById(owner, 'favorite').populate({
-    path: 'favorite',
-    options: { skip: skip, limit: limit },
-  });
+  const userFavoriteNotices = await User.findById(owner, 'favorite')
+    .populate({
+      path: 'favorite',
+      options: { skip: skip, limit: limit },
+    })
+    .sort({
+      createdAt: -1,
+    });
   const totalUserFavorite = await User.findById(owner, 'favorite').populate({
     path: 'favorite',
   });
