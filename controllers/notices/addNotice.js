@@ -9,8 +9,6 @@ const addNotice = async (req, res, next) => {
   const avatarURL = path
     ? await cloudinaryUpload(name, path)
     : gravatar.url(req.body.name);
-
-  console.log(phone, email);
   const result = await Notice.create({
     ...req.body,
     imageUrl: avatarURL,
