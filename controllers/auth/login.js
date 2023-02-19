@@ -8,7 +8,7 @@ const login = async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
 
-  if (!email || !password) {
+  if (!email || !password || user === null) {
     res.status(401).json({ message: 'Email or password is wrong' }); // "Email invalid"
     return;
   }
