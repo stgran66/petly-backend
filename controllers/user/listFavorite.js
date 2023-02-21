@@ -10,11 +10,8 @@ const listFavorite = async (req, res, next) => {
       path: 'favorite',
       match: {
         $or: [
-          { comments: { $regex: query, $options: 'i' } },
           { title: { $regex: query, $options: 'i' } },
-          { name: { $regex: query, $options: 'i' } },
           { breed: { $regex: query, $options: 'i' } },
-          { place: { $regex: query, $options: 'i' } },
         ],
       },
       options: { skip: skip, limit: limit },
