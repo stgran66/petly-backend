@@ -23,11 +23,8 @@ const listOwnersNotices = async (req, res, next) => {
   const allNotices = await Notice.find({
     owner,
     $or: [
-      { comments: { $regex: query, $options: 'i' } },
       { title: { $regex: query, $options: 'i' } },
-      { name: { $regex: query, $options: 'i' } },
       { breed: { $regex: query, $options: 'i' } },
-      { place: { $regex: query, $options: 'i' } },
     ],
   });
   res.json({ notices, total: allNotices.length });

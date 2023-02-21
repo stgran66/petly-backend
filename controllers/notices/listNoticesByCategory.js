@@ -12,11 +12,8 @@ const listNotices = async (req, res, next) => {
     const allNotices = await Notice.find({
       category,
       $or: [
-        { comments: { $regex: query, $options: 'i' } },
         { title: { $regex: query, $options: 'i' } },
-        { name: { $regex: query, $options: 'i' } },
         { breed: { $regex: query, $options: 'i' } },
-        { place: { $regex: query, $options: 'i' } },
       ],
     });
     const notices = await Notice.find(
